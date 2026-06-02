@@ -1,0 +1,46 @@
+FIRST NOTICE OF LOSS (FNOL) REPORT
+===================================
+
+POLICY INFORMATION
+------------------
+Policy Number: POL-2024-789456
+Policyholder Name: Jane Smith
+Effective Dates: 01/01/2024 - 12/31/2024
+
+INCIDENT INFORMATION
+--------------------
+Incident Date: March 15, 2024
+Incident Time: 2:30 PM
+Incident Location: Intersection of Main St and Oak Ave, Springfield, IL 62701
+Incident Description: My vehicle was rear-ended while stopped at a red traffic light.
+The other driver failed to brake in time and collided with the rear bumper of my vehicle,
+causing significant damage to the trunk, bumper assembly, and tail lights.
+
+CLAIMANT INFORMATION
+--------------------
+Claimant Name: Jane Smith
+Contact Details: jane.smith@email.com | (555) 123-4567 | 456 Elm St, Springfield, IL 62702
+
+THIRD PARTIES INVOLVED
+----------------------
+Third Party 1: John Doe — (555) 987-6543 — Driver of the other vehicle
+
+ASSET DETAILS
+-------------
+Asset Type: Automobile
+Asset ID (VIN): 1HGCM82633A123456
+Vehicle: 2022 Honda Accord EX-L (Silver)
+Estimated Damage: $8,500
+
+CLAIM DETAILS
+-------------
+Claim Type: Auto
+Initial Estimate: $8,500
+Attachments: police_report.pdf, damage_photos.zip, repair_quote.pdf
+
+DECLARATION
+-----------
+I declare that the above information is true and accurate to the best of my knowledge.
+
+Signed: Jane Smith
+Date: March 16, 2024

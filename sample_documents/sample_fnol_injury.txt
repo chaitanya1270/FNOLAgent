@@ -1,0 +1,41 @@
+FIRST NOTICE OF LOSS — INJURY CLAIM
+=====================================
+Report Date: April 2, 2024
+
+POLICY INFORMATION
+------------------
+Policy Number: POL-2024-112233
+Policyholder Name: Robert Johnson
+Effective Dates: 06/01/2023 - 05/31/2024
+
+INCIDENT INFORMATION
+--------------------
+Incident Date: April 1, 2024
+Incident Time: 10:15 AM
+Incident Location: 890 Commerce Blvd, Chicago, IL 60601
+Incident Description: Claimant slipped and fell on a wet floor inside the premises.
+No wet floor warning sign was displayed. Claimant sustained injuries to the lower back
+and right knee. Emergency services were called and claimant was transported to hospital.
+
+CLAIMANT INFORMATION
+--------------------
+Claimant Name: Robert Johnson
+Contact Details: r.johnson@email.com | (312) 555-0199
+
+THIRD PARTIES INVOLVED
+----------------------
+Store Manager: Sarah Lee | (312) 555-0100 | On-site at time of incident
+
+ASSET DETAILS
+-------------
+Asset Type: Commercial Premises
+Asset ID: 890-COMMERCE-BLVD
+Estimated Damage: $35,000
+
+CLAIM DETAILS
+-------------
+Claim Type: injury
+Initial Estimate: $35,000
+Attachments: medical_report.pdf, incident_photos.pdf, witness_statement.pdf
+
+Signature: Robert Johnson | Date: 04/02/2024
