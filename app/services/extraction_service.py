@@ -31,7 +31,6 @@ class AIExtractedFields(BaseModel):
     attachments: List[str] = []
     initialEstimate: Optional[str] = None
 
-
 async def extract_claim_fields(document_text: str) -> ExtractedFields:
     """Use Azure OpenAI structured outputs to extract claim fields from document text."""
     if not document_text.strip():

@@ -31,7 +31,7 @@ FNOLAgent is a production-ready, full-stack insurance claims processing platform
 - **Validation engine** — detects missing mandatory fields
 - **Routing engine** — 5 routes with strict priority ordering
 - **Reasoning engine** — plain-English routing explanations
-- **Modern React UI** with dark mode, colored route badges, upload history
+- **Modern React UI** with sidebar navigation, colored route badges, upload history
 - **Copy / Download JSON** response
 - **Swagger & ReDoc** API documentation
 - **Complete test suite** (unit + integration, 80%+ coverage target)
@@ -71,12 +71,26 @@ FastAPI Backend
      └── reasoning_service.py ← human-readable explanation
 ```
 
+### Mandatory Fields (Validation)
+
+All 16 extracted fields are treated as mandatory. If any field is absent or empty the claim is flagged for Manual Review.
+
+| Category | Fields |
+|---|---|
+| Policy Information | Policy Number, Policyholder Name, Effective Dates |
+| Incident Information | Incident Date, Incident Time, Incident Location, Incident Description |
+| Involved Parties | Claimant Name, Third Parties, Contact Details |
+| Asset Details | Asset Type, Asset ID, Estimated Damage |
+| Other Mandatory | Claim Type, Attachments, Initial Estimate |
+
+List fields (`thirdParties`, `attachments`) are treated as missing when they are empty arrays.
+
 ### Routing Rule Priority
 
 | Priority | Route | Trigger |
 |---|---|---|
 | 1 | Investigation Flag | Description contains "fraud", "inconsistent", or "staged" |
-| 2 | Manual Review | Any mandatory field missing |
+| 2 | Manual Review | Any of the 16 mandatory fields is missing or empty |
 | 3 | Specialist Queue | Claim type == injury |
 | 4 | Fast-track | Estimated damage < $25,000 |
 | 5 | Standard Processing | Default |
@@ -172,7 +186,7 @@ Upload an FNOL document for processing.
     "attachments": ["police_report.pdf", "photos.zip"],
     "initialEstimate": "$8,500"
   },
-  "missingFields": [],
+  "missingFields": [],  
   "recommendedRoute": "Fast-track",
   "reasoning": "Claim routed to Fast-track because the estimated damage ($8,500.00) is below the $25,000 threshold."
 }

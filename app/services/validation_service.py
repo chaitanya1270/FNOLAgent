@@ -5,12 +5,30 @@ from app.utils.logger import get_logger
 
 logger = get_logger(__name__)
 
+# All 16 fields listed in the assignment are mandatory.
+# List fields (thirdParties, attachments) are treated as missing when empty.
 MANDATORY_FIELDS = [
-    ("policyNumber", "Policy Number"),
-    ("claimType", "Claim Type"),
-    ("incidentDate", "Incident Date"),
-    ("estimatedDamage", "Estimated Damage"),
-    ("claimantName", "Claimant Name"),
+    # Policy Information
+    ("policyNumber",        "Policy Number"),
+    ("policyholderName",    "Policyholder Name"),
+    ("effectiveDates",      "Effective Dates"),
+    # Incident Information
+    ("incidentDate",        "Incident Date"),
+    ("incidentTime",        "Incident Time"),
+    ("incidentLocation",    "Incident Location"),
+    ("incidentDescription", "Incident Description"),
+    # Involved Parties
+    ("claimantName",        "Claimant Name"),
+    ("thirdParties",        "Third Parties"),
+    ("contactDetails",      "Contact Details"),
+    # Asset Details
+    ("assetType",           "Asset Type"),
+    ("assetId",             "Asset ID"),
+    ("estimatedDamage",     "Estimated Damage"),
+    # Other Mandatory Fields
+    ("claimType",           "Claim Type"),
+    ("attachments",         "Attachments"),
+    ("initialEstimate",     "Initial Estimate"),
 ]
 
 
@@ -19,7 +37,12 @@ def validate_claim(fields: ExtractedFields) -> List[str]:
     missing: List[str] = []
     for attr, display_name in MANDATORY_FIELDS:
         value = getattr(fields, attr, None)
-        if not value or (isinstance(value, str) and not value.strip()):
+        is_missing = (
+            value is None
+            or (isinstance(value, str) and not value.strip())
+            or (isinstance(value, list) and len(value) == 0)
+        )
+        if is_missing:
             missing.append(display_name)
             logger.debug("Missing mandatory field: %s", display_name)
 

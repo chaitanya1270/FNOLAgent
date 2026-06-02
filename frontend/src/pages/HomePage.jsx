@@ -5,12 +5,11 @@ import ResultsDashboard from "../components/ResultsDashboard";
 import ErrorAlert from "../components/ErrorAlert";
 import { uploadClaim } from "../services/claimApi";
 
-export default function HomePage() {
-  const [status, setStatus] = useState("idle"); // idle | uploading | success | error
+export default function HomePage({ onNewClaim }) {
+  const [status, setStatus] = useState("idle");
   const [result, setResult] = useState(null);
   const [error, setError] = useState("");
   const [filename, setFilename] = useState("");
-  const [history, setHistory] = useState([]);
 
   const handleFileSelect = async (file) => {
     setStatus("uploading");
@@ -22,10 +21,11 @@ export default function HomePage() {
       const data = await uploadClaim(file);
       setResult(data);
       setStatus("success");
-      setHistory((prev) => [
-        { filename: file.name, route: data.recommendedRoute, ts: new Date().toLocaleTimeString() },
-        ...prev.slice(0, 4),
-      ]);
+      onNewClaim?.({
+        filename: file.name,
+        route: data.recommendedRoute,
+        ts: new Date().toLocaleTimeString([], { hour: "2-digit", minute: "2-digit" }),
+      });
     } catch (err) {
       const msg =
         err?.response?.data?.detail ||
@@ -40,68 +40,61 @@ export default function HomePage() {
     setStatus("idle");
     setResult(null);
     setError("");
+    setFilename("");
   };
 
   return (
-    <main className="max-w-5xl mx-auto px-4 py-8 space-y-8">
-      {/* Upload card */}
-      <div className="card">
-        <div className="flex items-center justify-between mb-5">
-          <div>
-            <h2 className="text-lg font-semibold text-gray-800 dark:text-white">
-              Upload FNOL Document
-            </h2>
-            <p className="text-sm text-gray-500 dark:text-gray-400 mt-0.5">
-              PDF or TXT — up to 10 MB
-            </p>
+    <div className="min-h-full flex flex-col">
+      {/* Centered upload view */}
+      {status === "idle" && (
+        <div className="flex-1 flex flex-col items-center justify-center px-8 py-12">
+          <div className="w-full max-w-xl">
+            <div className="text-center mb-8">
+              <h1 className="text-2xl font-bold text-slate-900 tracking-tight">
+                Upload Claim Document
+              </h1>
+              <p className="text-slate-500 text-sm mt-2">
+                Upload a PDF or TXT FNOL document to extract, validate, and route the claim automatically.
+              </p>
+            </div>
+            <UploadZone onFileSelect={handleFileSelect} disabled={false} />
           </div>
-          {status !== "idle" && (
-            <button
-              onClick={reset}
-              className="text-sm text-brand-600 hover:underline dark:text-brand-400"
-            >
-              Upload new
-            </button>
-          )}
         </div>
+      )}
 
-        <UploadZone onFileSelect={handleFileSelect} disabled={status === "uploading"} />
-      </div>
-
-      {/* States */}
+      {/* Processing pipeline */}
       {status === "uploading" && (
-        <div className="card">
-          <LoadingSpinner message="Extracting claim data with Azure OpenAI…" />
+        <div className="flex-1 flex flex-col items-center justify-center px-8 py-12">
+          <div className="w-full max-w-xl">
+            <LoadingSpinner filename={filename} />
+          </div>
         </div>
       )}
 
+      {/* Error */}
       {status === "error" && (
-        <ErrorAlert message={error} onDismiss={reset} />
-      )}
-
-      {status === "success" && result && (
-        <ResultsDashboard result={result} filename={filename} />
-      )}
-
-      {/* Upload History */}
-      {history.length > 0 && (
-        <div className="card">
-          <h2 className="text-sm font-semibold text-gray-600 dark:text-gray-400 uppercase tracking-wide mb-3">
-            Recent Uploads
-          </h2>
-          <ul className="divide-y divide-gray-100 dark:divide-gray-700">
-            {history.map((h, i) => (
-              <li key={i} className="py-2 flex items-center justify-between text-sm">
-                <span className="text-gray-700 dark:text-gray-300 truncate max-w-xs">{h.filename}</span>
-                <div className="flex items-center gap-3 shrink-0">
-                  <span className="text-gray-400 dark:text-gray-500 text-xs">{h.ts}</span>
-                  <span className="font-medium text-gray-600 dark:text-gray-400 text-xs">{h.route}</span>
-                </div>
-              </li>
-            ))}
-          </ul>
+        <div className="flex-1 flex flex-col items-center justify-center px-8 py-12">
+          <div className="w-full max-w-xl">
+            <ErrorAlert message={error} onDismiss={reset} />
+          </div>
         </div>
       )}
-    </main>
+
+      {/* Results */}
+      {status === "success" && result && (
+        <div className="flex-1 px-8 py-10">
+          <div className="max-w-4xl mx-auto">
+            <div className="flex items-start justify-between mb-6">
+              <div>
+                <h1 className="text-2xl font-bold text-slate-900 tracking-tight">Claim Results</h1>
+                <p className="text-slate-500 text-sm mt-1">Extraction, validation, and routing complete.</p>
+              </div>
+              <button onClick={reset} className="btn-ghost shrink-0">← New Upload</button>
+            </div>
+            <ResultsDashboard result={result} filename={filename} onReset={reset} />
+          </div>
+        </div>
+      )}
+    </div>
   );
 }

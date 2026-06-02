@@ -71,7 +71,23 @@ def test_missing_claimant_name():
 def test_all_mandatory_fields_missing():
     fields = ExtractedFields()
     missing = validate_claim(fields)
-    assert len(missing) == 5
+    assert len(missing) == 16
+    assert "Policy Number" in missing
+    assert "Policyholder Name" in missing
+    assert "Effective Dates" in missing
+    assert "Incident Date" in missing
+    assert "Incident Time" in missing
+    assert "Incident Location" in missing
+    assert "Incident Description" in missing
+    assert "Claimant Name" in missing
+    assert "Third Parties" in missing
+    assert "Contact Details" in missing
+    assert "Asset Type" in missing
+    assert "Asset ID" in missing
+    assert "Estimated Damage" in missing
+    assert "Claim Type" in missing
+    assert "Attachments" in missing
+    assert "Initial Estimate" in missing
 
 
 def test_empty_string_treated_as_missing():
