@@ -269,7 +269,7 @@ The system uses the **Structured Outputs** feature (`beta.chat.completions.parse
 ### 1. Clone Repository
 
 ```bash
-git clone https://github.com/your-username/FNOLAgent.git
+git clone https://github.com/chaitanya1270/FNOLAgent
 cd FNOLAgent
 ```
 
